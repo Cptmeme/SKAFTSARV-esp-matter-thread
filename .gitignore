@@ -1,0 +1,23 @@
+# ESP-IDF build output
+build/
+led_test/build/
+
+# Managed components are fetched by the component manager
+managed_components/
+led_test/managed_components/
+
+# Generated from sdkconfig.defaults* - do not commit, it is machine and
+# IDF-version specific. sdkconfig.defaults.esp32c6 reproduces it exactly.
+sdkconfig
+sdkconfig.old
+led_test/sdkconfig
+led_test/sdkconfig.old
+
+# Local copies of the upstream example, kept only as a personal safety net
+backup_original_example/
+
+# Editor / OS
+.vscode/
+.clangd
+.DS_Store
+*.orig

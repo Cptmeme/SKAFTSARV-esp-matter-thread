@@ -1,0 +1,8 @@
+CONFIG_IDF_TARGET="esp32c6"
+
+# The C6 SuperMini has no USB-UART bridge, so the console has to run over the
+# native USB port (USB Serial/JTAG), not UART0.
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=4096
+CONFIG_FREERTOS_HZ=1000

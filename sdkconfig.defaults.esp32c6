@@ -1,0 +1,83 @@
+CONFIG_IDF_TARGET="esp32c6"
+
+# ---------------------------------------------------------------------------
+# Matter over Thread on the ESP32-C6 SuperMini. No Wi-Fi.
+# BLE stays enabled because commissioning happens over it.
+# ---------------------------------------------------------------------------
+
+# Thread, not Wi-Fi
+CONFIG_ENABLE_WIFI_STATION=n
+CONFIG_ENABLE_WIFI_AP=n
+CONFIG_OPENTHREAD_ENABLED=y
+CONFIG_OPENTHREAD_SRP_CLIENT=y
+CONFIG_OPENTHREAD_DNS_CLIENT=y
+CONFIG_OPENTHREAD_LOG_LEVEL_DYNAMIC=n
+CONFIG_OPENTHREAD_LOG_LEVEL_CRIT=y
+CONFIG_OPENTHREAD_CLI=n
+
+# BLE, used only to commission
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BT_NIMBLE_EXT_ADV=n
+CONFIG_BT_NIMBLE_HCI_EVT_BUF_SIZE=70
+CONFIG_USE_BLE_ONLY_FOR_COMMISSIONING=n
+
+# libsodium
+CONFIG_LIBSODIUM_USE_MBEDTLS_SHA=y
+
+# lwIP tuning for OpenThread
+CONFIG_LWIP_IPV6_AUTOCONFIG=n
+CONFIG_LWIP_IPV6_NUM_ADDRESSES=8
+CONFIG_LWIP_MULTICAST_PING=y
+
+# Discovery
+CONFIG_USE_MINIMAL_MDNS=n
+CONFIG_ENABLE_EXTENDED_DISCOVERY=y
+
+# OTA
+CONFIG_ENABLE_OTA_REQUESTOR=y
+
+# Partition table
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# The SuperMini has no USB-UART bridge, so the console runs over native USB.
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+# Buttons. GPIO9 is the board's BOOT button; the lamp's own buttons on
+# GPIO19/GPIO18 are created directly in app_driver.cpp.
+CONFIG_BUTTON_PERIOD_TIME_MS=20
+CONFIG_BUTTON_LONG_PRESS_TIME_MS=5000
+CONFIG_BSP_BUTTONS_NUM=1
+CONFIG_BSP_BUTTON_1_TYPE_GPIO=y
+CONFIG_BSP_BUTTON_1_GPIO=9
+CONFIG_BSP_BUTTON_1_LEVEL=0
+
+# The lamp strip is driven by main/strip_driver.c, so the BSP LED is unused.
+CONFIG_BSP_LEDS_NUM=1
+CONFIG_BSP_LED_TYPE_RGB=y
+CONFIG_BSP_LED_RGB_GPIO=8
+CONFIG_BSP_LED_RGB_BACKEND_RMT=y
+
+
+CONFIG_SUPPORT_GROUPCAST_CLUSTER=n
+
+# Report the lamp as IKEA / SKAFTSARV via main/lamp_device_info.cpp
+CONFIG_CUSTOM_DEVICE_INSTANCE_INFO_PROVIDER=y
+
+# Progress-level CHIP logging: enough to follow commissioning without the
+# per-message tracing, which is most of the output.
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_CHIP_LOG_DEFAULT_LEVEL_PROGRESS=y
+
+# The CHIP shell MUST stay off, and this has to be an explicit =n because the
+# shared sdkconfig.defaults sets it to y.
+#
+# Its main loop (connectedhomeip src/lib/shell/MainLoopESP32.cpp) calls
+# linenoise() and, when that returns NULL, loops straight back round with no
+# delay. With a USB host attached the read blocks and the task sleeps. With no
+# host it returns immediately, so the task spins at priority 5 - the same
+# priority as the OpenThread task - and starves Thread and Matter. The symptom
+# is a lamp that advertises for commissioning and works over USB, but hangs at
+# "connecting" and times out whenever it runs standalone on its own supply.
+CONFIG_ENABLE_CHIP_SHELL=n
