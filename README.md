@@ -39,10 +39,16 @@ salvaging rather than replacing.
 half with the controller and the microphone — that removes the old controller from the
 LED data line while leaving the buttons where the housing expects them.
 
-Then solder a wire to the **ground** pad and the **positive** pad of each button and run
-them out: the ground wires to the board's GND, and the two signal wires to GPIO18 and
-GPIO19. The firmware enables the C6's internal pull-ups and treats a press as the pin
-being pulled to ground, so no external resistors are needed.
+**Three wires in total**, because the two buttons share a ground on the salvaged half:
+
+| Wire | From | To |
+|---|---|---|
+| 1 | Shared ground pad | SuperMini **GND** |
+| 2 | Button 1 positive pad | **GPIO18** (on/off) |
+| 3 | Button 2 positive pad | **GPIO19** (brightness) |
+
+The firmware enables the C6's internal pull-ups and treats a press as the pin being
+pulled to ground, so no external resistors are needed.
 
 ### Wiring
 
