@@ -39,13 +39,18 @@ salvaging rather than replacing.
 half with the controller and the microphone — that removes the old controller from the
 LED data line while leaving the buttons where the housing expects them.
 
-**Three wires in total**, because the two buttons share a ground on the salvaged half:
+There are no convenient pads to use, so solder **directly to the legs of the switches**.
+**Three wires in total**, because the ground side is common to both buttons on the
+salvaged piece:
 
 | Wire | From | To |
 |---|---|---|
-| 1 | Shared ground pad | SuperMini **GND** |
-| 2 | Button 1 positive pad | **GPIO18** (on/off) |
-| 3 | Button 2 positive pad | **GPIO19** (brightness) |
+| 1 | Shared ground leg | SuperMini **GND** |
+| 2 | Signal leg of button 1 | **GPIO18** (on/off) |
+| 3 | Signal leg of button 2 | **GPIO19** (brightness) |
+
+On a four-pin tactile switch the two legs on the same side are internally joined, so pick
+legs from opposite sides — otherwise the button reads as permanently pressed.
 
 The firmware enables the C6's internal pull-ups and treats a press as the pin being
 pulled to ground, so no external resistors are needed.
