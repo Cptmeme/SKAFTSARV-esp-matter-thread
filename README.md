@@ -32,15 +32,17 @@ partway along.
 
 ### Keeping the original buttons
 
-This part is not covered by the WLED guides — they drop the buttons entirely. The buttons
-sit on that same board and are aligned with the housing, so they are worth salvaging
-rather than replacing.
+The WLED guides keep the buttons too, but they solder to the small pads left behind after
+desoldering the original controller. Those pads are fragile — **one tore off here while
+reassembling the lamp**, which is what prompted the approach below.
 
-**Cut the original PCB in half.** Keep the half carrying the two buttons and discard the
-half with the controller and the microphone — that removes the old controller from the
-LED data line while leaving the buttons where the housing expects them.
+**Cut the original PCB in half instead.** Keep the half carrying the two buttons and
+discard the half with the controller and the microphone. That removes the old controller
+from the LED data line, leaves the buttons where the housing expects them, and keeps the
+switches on a solid piece of board.
 
-There are no convenient pads to use, so solder **directly to the legs of the switches**.
+Then solder **directly to the legs of the switches** rather than to any pad. It is far
+more rigid and survives being handled during reassembly.
 **Three wires in total**, because the ground side is common to both buttons on the
 salvaged piece:
 
@@ -62,10 +64,16 @@ pulled to ground, so no external resistors are needed.
 [simoneluconi/SKAFTSARV-to-WLED](https://github.com/simoneluconi/SKAFTSARV-to-WLED)** —
 it covers the disassembly and the wire connections properly, with photos. The
 [isarrider variant](https://github.com/isarrider/SKAFTSARV-to-WLED) is worth reading too.
-Everything there applies unchanged; only the buttons below differ, and the pin numbers,
-since this uses an ESP32-C6 rather than a C3.
+Everything there applies unchanged; only the pin numbers differ, since this uses an
+ESP32-C6 rather than a C3, and the buttons are attached differently (below).
 
-The table is just the pin mapping for this build:
+In total there are three groups of wires:
+
+1. **LED strip → ESP32**: +5 V, GND and data
+2. **Original power cable → ESP32**: +5 V and GND
+3. **Buttons → ESP32**: shared GND, plus one signal per button
+
+The table is the pin mapping for this build:
 
 | SuperMini | Lamp | Notes |
 |---|---|---|
