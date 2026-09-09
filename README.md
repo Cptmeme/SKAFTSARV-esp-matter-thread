@@ -153,4 +153,12 @@ device attestation and claim a certification this lamp does not hold.
 
 ## Licence
 
-Apache-2.0, matching esp-matter. See [LICENSE](LICENSE).
+GPL-3.0. See [LICENSE](LICENSE).
+
+Copyright (C) 2026 Cptmeme.
+
+The files under `main/` that began life as Espressif's `light` example keep their
+original "Public Domain (or CC0)" headers — that is accurate about where they came from,
+and the unmodified originals remain available under those terms from
+[espressif/esp-matter](https://github.com/espressif/esp-matter). esp-matter and
+connectedhomeip are Apache-2.0, which is compatible with GPL-3.0 in this direction.
