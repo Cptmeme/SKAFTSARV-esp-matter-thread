@@ -32,8 +32,9 @@ partway along.
 
 ### Keeping the original buttons
 
-The buttons sit on that same board and are aligned with the housing, so they are worth
-salvaging rather than replacing.
+This part is not covered by the WLED guides — they drop the buttons entirely. The buttons
+sit on that same board and are aligned with the housing, so they are worth salvaging
+rather than replacing.
 
 **Cut the original PCB in half.** Keep the half carrying the two buttons and discard the
 half with the controller and the microphone — that removes the old controller from the
@@ -56,6 +57,15 @@ The firmware enables the C6's internal pull-ups and treats a press as the pin be
 pulled to ground, so no external resistors are needed.
 
 ### Wiring
+
+**For opening the lamp and identifying the three lamp wires, follow
+[simoneluconi/SKAFTSARV-to-WLED](https://github.com/simoneluconi/SKAFTSARV-to-WLED)** —
+it covers the disassembly and the wire connections properly, with photos. The
+[isarrider variant](https://github.com/isarrider/SKAFTSARV-to-WLED) is worth reading too.
+Everything there applies unchanged; only the buttons below differ, and the pin numbers,
+since this uses an ESP32-C6 rather than a C3.
+
+The table is just the pin mapping for this build:
 
 | SuperMini | Lamp | Notes |
 |---|---|---|
