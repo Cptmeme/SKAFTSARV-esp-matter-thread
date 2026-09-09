@@ -26,9 +26,23 @@ including Adaptive Lighting.
 - **ESP32-C6 SuperMini**
 - The lamp's original 5 V USB cable and supply
 
-The original control board is removed entirely. Leaving it connected to the LED data
-line makes two drivers fight over it, which produces flicker, wrong colours and a strip
-that dies partway along.
+The original control board has to go. Leaving it connected to the LED data line makes two
+drivers fight over it, which produces flicker, wrong colours and a strip that dies
+partway along.
+
+### Keeping the original buttons
+
+The buttons sit on that same board and are aligned with the housing, so they are worth
+salvaging rather than replacing.
+
+**Cut the original PCB in half.** Keep the half carrying the two buttons and discard the
+half with the controller and the microphone — that removes the old controller from the
+LED data line while leaving the buttons where the housing expects them.
+
+Then solder a wire to the **ground** pad and the **positive** pad of each button and run
+them out: the ground wires to the board's GND, and the two signal wires to GPIO18 and
+GPIO19. The firmware enables the C6's internal pull-ups and treats a press as the pin
+being pulled to ground, so no external resistors are needed.
 
 ### Wiring
 
