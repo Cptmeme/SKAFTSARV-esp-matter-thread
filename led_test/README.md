@@ -12,7 +12,7 @@ plain `source ~/esp/esp-idf/export.sh` fails. Put 3.13 first:
 ```sh
 export PATH="/opt/homebrew/opt/python@3.13/bin:$PATH"
 source ~/esp/esp-idf/export.sh
-cd ~/esp/esp-matter-light/led_test
+cd ~/esp/SKAFTSARV-esp-matter-thread/led_test
 idf.py -p /dev/cu.usbmodem* flash monitor      # exit the monitor with Ctrl-]
 ```
 
