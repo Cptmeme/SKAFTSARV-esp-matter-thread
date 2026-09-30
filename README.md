@@ -14,7 +14,7 @@ including Adaptive Lighting.
 | On/off, dimming | Full Matter Level Control |
 | Colour | Hue/saturation, colour temperature and CIE xy |
 | Adaptive Lighting | Works in Apple Home |
-| Rainbow effect | A moving hue cycle across the strip, on its own on/off switch |
+| Rainbow effect | A moving hue cycle across the strip, on its own on/off switch. Picking a colour or white temperature switches it off, and so do Adaptive Lighting's periodic white-temperature changes |
 | Physical buttons | The lamp's original two buttons: on/off and brightness |
 | Factory reset | Hold the on/off button 10 s, release — the strip flashes red to confirm |
 | Current limiting | WLED-style automatic brightness limiter, so the strip can't brown out its supply |
