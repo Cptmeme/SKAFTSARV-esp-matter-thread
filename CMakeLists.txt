@@ -36,14 +36,17 @@ if(NOT DEFINED ENV{ESP_MATTER_DEVICE_PATH})
     endif()
 endif(NOT DEFINED ENV{ESP_MATTER_DEVICE_PATH})
 
+# Firmware version. Bump both for every OTA release, together with
+# CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER in sdkconfig (checked below).
+# -DCLI_PROJECT_VER=... / -DCLI_PROJECT_VER_NUMBER=... override them.
 if(NOT DEFINED CLI_PROJECT_VER)
-    set(PROJECT_VER "1.0")
+    set(PROJECT_VER "1.1")
 else()
     set(PROJECT_VER "${CLI_PROJECT_VER}")
 endif()
 
 if(NOT DEFINED CLI_PROJECT_VER_NUMBER)
-    set(PROJECT_VER_NUMBER 1)
+    set(PROJECT_VER_NUMBER 2)
 else()
     set(PROJECT_VER_NUMBER "${CLI_PROJECT_VER_NUMBER}")
 endif()
@@ -64,6 +67,14 @@ set(EXTRA_COMPONENT_DIRS
     ${extra_components_dirs_append})
 
 project(light)
+
+# The OTA image header carries PROJECT_VER_NUMBER, the device reports
+# CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER. If they differ, an update is either
+# re-downloaded forever or reported as failed.
+if(NOT CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER EQUAL PROJECT_VER_NUMBER)
+    message(FATAL_ERROR "CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER (${CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER}) "
+                        "must equal PROJECT_VER_NUMBER (${PROJECT_VER_NUMBER})")
+endif()
 
 # WARNING: This is just an example for using key for decrypting the encrypted OTA image
 # Please do not use it as is.

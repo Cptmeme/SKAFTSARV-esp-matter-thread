@@ -143,6 +143,60 @@ or a self-hosted OTBR).
 These are test values shared with every stock esp-matter example. If another such device
 is powered nearby, your phone may try to commission that one instead.
 
+## Updating the firmware
+
+### Versions
+
+Bump all three for every release, or the lamp ignores the update. The build fails if the
+two numbers differ.
+
+- `PROJECT_VER` (e.g. `"1.1"`) and `PROJECT_VER_NUMBER` (e.g. `2`) in `CMakeLists.txt`
+- `CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER` in `sdkconfig.defaults.esp32c6` **and** in your
+  local `sdkconfig` (same number). An existing `sdkconfig` keeps its old value: change it
+  there too, or delete `sdkconfig` so it is regenerated from the defaults.
+
+Instead of editing `CMakeLists.txt` you can pass the first two on the command line,
+`idf.py -DCLI_PROJECT_VER=1.2 -DCLI_PROJECT_VER_NUMBER=3 build` (the `sdkconfig` number
+still has to match). CMake caches them in `build/`, so later builds keep using them until
+you pass new values or run `idf.py fullclean`.
+
+### Over USB
+
+A normal `idf.py -p /dev/ttyUSB0 flash` still works.
+
+### Over the air (Matter OTA over Thread)
+
+The build also produces `build/light-ota.bin`, a Matter OTA image. Apple Home and Google
+Home only update certified devices, so you serve it yourself with the Matter SDK's host
+tools. Build them from the SDK with
+`./scripts/build/build_examples.py --target darwin-arm64-chip-tool --target darwin-arm64-ota-provider build`.
+
+One-time setup: in the Home app, turn on pairing mode for the lamp, then add the provider
+and the lamp to `chip-tool`'s fabric:
+
+```sh
+chip-tool pairing code 2 <setup-code-from-home-app>              # lamp = node 2
+chip-ota-provider-app -f build/light-ota.bin --discriminator 3841 --secured-device-port 5565 &
+chip-tool pairing onnetwork-long 1 20202021 3841                 # provider = node 1
+chip-tool accesscontrol write acl '[{"fabricIndex": 1, "privilege": 5, "authMode": 2, "subjects": [112233], "targets": null}, {"fabricIndex": 1, "privilege": 3, "authMode": 2, "subjects": null, "targets": [{"cluster": 41, "endpoint": null, "deviceType": null}]}]' 1 0
+```
+
+Each update (with the provider running and serving the new `light-ota.bin`):
+
+```sh
+chip-tool otasoftwareupdaterequestor announce-otaprovider 1 0 2 0 2 0
+chip-tool basicinformation read software-version 2 0              # afterwards: the new number
+```
+
+The 1.6 MB image takes roughly a quarter of an hour over Thread. The lamp then restarts
+into the new version and keeps it once it has run for a minute while attached to the
+Thread network. If it doesn't get there within 5 minutes, or crashes before that, the
+bootloader automatically returns to the previous version.
+
+Rollback needs the bootloader from this build, and the bootloader can only be written over
+USB. A lamp that has only been updated over the air still updates fine, it just won't roll
+back.
+
 ## Things that cost me a lot of time
 
 **The CHIP shell must stay off.** `CONFIG_ENABLE_CHIP_SHELL=n`, explicitly, because the

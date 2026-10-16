@@ -36,6 +36,11 @@ CONFIG_ENABLE_EXTENDED_DISCOVERY=y
 
 # OTA
 CONFIG_ENABLE_OTA_REQUESTOR=y
+# Build build/light-ota.bin, and roll back an update that doesn't come up (see app_main.cpp)
+CONFIG_CHIP_OTA_IMAGE_BUILD=y
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+# Reported SoftwareVersion: must equal PROJECT_VER_NUMBER in CMakeLists.txt (the build checks)
+CONFIG_DEVICE_SOFTWARE_VERSION_NUMBER=2
 
 # Partition table
 CONFIG_PARTITION_TABLE_CUSTOM=y
