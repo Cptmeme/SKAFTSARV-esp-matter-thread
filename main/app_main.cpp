@@ -336,7 +336,10 @@ extern "C" void app_main()
        moving rainbow across the individually addressable LEDs. The light's own
        on/off and brightness still apply while it runs. */
     on_off_plug_in_unit::config_t effect_config;
-    effect_config.on_off.on_off = false;
+    effect_config.on_off.on_off = false; /* first boot only; then restored from flash */
+    /* Null means "the previous state", so a running rainbow survives a power cut.
+       The default would switch it off on every power-up. */
+    effect_config.on_off_lighting.start_up_on_off = nullptr;
     endpoint_t *effect_endpoint =
         on_off_plug_in_unit::create(node, &effect_config, ENDPOINT_FLAG_NONE, light_handle);
     ABORT_APP_ON_FAILURE(effect_endpoint != nullptr,

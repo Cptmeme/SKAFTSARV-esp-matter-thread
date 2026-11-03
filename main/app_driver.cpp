@@ -284,6 +284,16 @@ esp_err_t app_driver_light_set_defaults(uint16_t endpoint_id)
     attribute::get_val(attribute, &val);
     err |= app_driver_light_set_power(&val);
 
+    /* Resume the rainbow if it was running when the power went. Matter restores
+       the switch, but that changes no attribute, so no callback would start it. */
+    if (effect_endpoint_id != 0) {
+        attribute = attribute::get(effect_endpoint_id, OnOff::Id, OnOff::Attributes::OnOff::Id);
+        attribute::get_val(attribute, &val);
+        if (val.val.b) {
+            err |= strip_driver_set_effect(true);
+        }
+    }
+
     return err;
 }
 
