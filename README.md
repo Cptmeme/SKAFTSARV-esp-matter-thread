@@ -73,6 +73,11 @@ In total there are three groups of wires:
 2. **Original power cable → ESP32**: +5 V and GND
 3. **Buttons → ESP32**: shared GND, plus one signal per button
 
+![Inside a converted lamp: the SuperMini with a white USB-C cable plugged in, the button board and the LED strip, joined by the wires listed above](images/wiring.jpg)
+
+*A converted lamp with its housing open. The white USB-C cable is only there to flash the
+firmware. The lamp doesn't need it to run, because it's powered by its original cable.*
+
 The table is the pin mapping for this build:
 
 | SuperMini | Lamp | Notes |
