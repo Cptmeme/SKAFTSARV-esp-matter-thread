@@ -241,13 +241,6 @@ lose the command.
 1.x, which can't coexist with 3.x. `strip_driver.c` drives the WS2812 waveform straight
 from RMT instead.
 
-## led_test/
-
-A standalone bench app for checking the strip and buttons before dealing with Matter —
-builds in a minute rather than fifteen. Walking pixel, solid colours, colour-order
-testing, a current-budget sweep, button bounce counting, and a square-wave mode for
-metering a suspect solder joint. See [`led_test/README.md`](led_test/README.md).
-
 ## Credits
 
 - [simoneluconi/SKAFTSARV-to-WLED](https://github.com/simoneluconi/SKAFTSARV-to-WLED) — original conversion and pinout
