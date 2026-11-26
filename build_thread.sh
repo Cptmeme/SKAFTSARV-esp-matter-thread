@@ -7,15 +7,15 @@
 set -e
 
 # Override any of these in your environment if your install differs.
-: "${IDF_PATH:=$HOME/.espressif/v5.5.4/esp-idf}"
+: "${IDF_PATH:=$HOME/.espressif/v6.0.2/esp-idf}"
 : "${IDF_TOOLS_PATH:=$HOME/.espressif}"
-: "${ESP_MATTER_PATH:=$HOME/.espressif/esp-matter}"
+: "${ESP_MATTER_PATH:=$HOME/.espressif/esp-matter-1.6.1}"
 export IDF_PATH IDF_TOOLS_PATH ESP_MATTER_PATH
 # This install has no espidf.constraints.v5.5.txt (the VS Code extension
 # manages its own python env), and idf.py refuses to run any action
 # without it. The packages are present, so skip the check.
 export IDF_PYTHON_CHECK_CONSTRAINTS=no
-: "${IDF_PYTHON_ENV_PATH:=$HOME/.espressif/tools/python/v5.5.4/venv}"
+: "${IDF_PYTHON_ENV_PATH:=$HOME/.espressif/python_env/idf6.0_py3.13_env}"
 export IDF_PYTHON_ENV_PATH
 IDF_PY="$IDF_PYTHON_ENV_PATH/bin/python"
 

@@ -112,7 +112,8 @@ before settling on a value.
 
 ## Building
 
-Requires [esp-matter](https://github.com/espressif/esp-matter) and its ESP-IDF.
+Requires [esp-matter](https://github.com/espressif/esp-matter) v1.6.1 (`release/v1.6.1`) and ESP-IDF v6.0.2.
+Versions up to 1.1 were built with esp-matter v1.5 and ESP-IDF v5.5.4.
 
 ```sh
 export ESP_MATTER_PATH=~/esp-matter          # wherever yours lives
@@ -197,6 +198,10 @@ The 1.6 MB image takes roughly a quarter of an hour over Thread. The lamp then r
 into the new version and keeps it once it has run for a minute while attached to the
 Thread network. If it doesn't get there within 5 minutes, or crashes before that, the
 bootloader automatically returns to the previous version.
+
+The bootloader can start apps built with newer ESP-IDF versions, but not older ones. A lamp
+flashed over serial with version 1.2 or later (ESP-IDF 6) can't be updated back to 1.1 or
+earlier (ESP-IDF 5.5). One flashed with an earlier version can take 1.2 over the air.
 
 Rollback needs the bootloader from this build, and the bootloader can only be written over
 USB. A lamp that has only been updated over the air still updates fine, it just won't roll

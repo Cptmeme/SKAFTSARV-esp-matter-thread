@@ -1,5 +1,5 @@
 # ESP-IDF build output
-build/
+build*/
 led_test/build/
 
 # Managed components are fetched by the component manager
